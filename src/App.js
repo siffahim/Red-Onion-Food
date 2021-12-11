@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import AuthProvider from './Context/AuthProvider';
+import FoodDetail from './Pages/FoodDetail/FoodDetail';
 import Home from './Pages/Home/Home/Home';
 import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
@@ -17,18 +18,27 @@ function App() {
           <Route exact path='/'
             element={<Home />}
           />
+
           <Route path='/home'
             element={<Home />}
           />
+
+          <Route path='/food/:foodId'
+            element={<FoodDetail />}
+          />
+
           <Route path='/login'
             element={<Login />}
           />
+
           <Route path='/register'
             element={<Register />}
           />
+
           <Route path='/map'
             element={<MapDirection />}
           />
+
         </Routes>
       </Router>
     </AuthProvider>

@@ -4,12 +4,19 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Food = ({ foods }) => {
-    const { name, pic, price } = foods;
+    const { _id, name, pic, price } = foods;
+    const navigate = useNavigate();
+
+    const handleClick = id => {
+        navigate(`/food/${id}`)
+    }
+
     return (
         <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ heigit: '300px', boxShadow: 0 }}>
+            <Card sx={{ heigit: '300px', boxShadow: 0 }} onClick={() => handleClick(_id)}>
                 <CardActionArea>
                     <CardMedia
                         component="img"
