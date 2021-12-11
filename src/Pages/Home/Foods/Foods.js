@@ -7,7 +7,7 @@ const Foods = () => {
     const [cata, setCata] = useState('breakfast');
     useEffect(() => {
         const run = async () => {
-            const res = await fetch('http://localhost:5000/foods')
+            const res = await fetch('https://still-escarpment-97204.herokuapp.com/foods')
             const data = await res.json()
             setFoods(data)
         }

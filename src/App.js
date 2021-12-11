@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import AuthProvider from './Context/AuthProvider';
+import MyOrder from './MyOrder/MyOrder';
 import FoodDetail from './Pages/FoodDetail/FoodDetail';
 import Home from './Pages/Home/Home/Home';
 import Login from './Pages/Login/Login/Login';
@@ -37,6 +38,10 @@ function App() {
 
           <Route path='/map'
             element={<MapDirection />}
+          />
+
+          <Route path='/myorder'
+            element={<MyOrder />}
           />
 
         </Routes>

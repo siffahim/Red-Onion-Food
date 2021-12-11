@@ -1,14 +1,40 @@
 import { Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import useAuth from '../../Hooks/useAuth';
 
 const FoodDetailCard = ({ food }) => {
     const { catagory, name, pic, price } = food;
     const [count, setCount] = useState(1);
+    const { user } = useAuth();
 
     //string cutting..............>
     const str1 = catagory?.charAt(0).toUpperCase();
     const str2 = catagory?.slice(1);
 
+    //data-------------
+    const order = {
+        name,
+        email: user.email,
+        price,
+        img: pic,
+    }
+
+    //save info on DB
+    const handleSendToDB = () => {
+        fetch('https://still-escarpment-97204.herokuapp.com/orders', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(order)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    alert('Successfully Added Product')
+                }
+            })
+    }
 
     return (
         <Grid container className='d-flex align-items-center justify-content-between p-md-5'>
@@ -24,7 +50,7 @@ const FoodDetailCard = ({ food }) => {
                         <button onClick={() => setCount(count + 1)}>+</button>
                     </div>
                 </div>
-                <button className='btn mt-3'>Add</button>
+                <button className='btn mt-3' onClick={handleSendToDB}>Add</button>
             </Grid>
             <Grid item sx={12} md={6}>
                 <img width='80%' src={pic} alt="" />
