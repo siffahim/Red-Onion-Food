@@ -8,6 +8,7 @@ import Home from './Pages/Home/Home/Home';
 import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
 import MapDirection from './Pages/MapDirection/MapDirection';
+import PrivateRouter from './Pages/PrivateRouter/PrivateRouter';
 import Navigation from './Pages/Shared/Navigation/Navigation';
 
 function App() {
@@ -25,7 +26,9 @@ function App() {
           />
 
           <Route path='/food/:foodId'
-            element={<FoodDetail />}
+            element={<PrivateRouter>
+              <FoodDetail />
+            </PrivateRouter>}
           />
 
           <Route path='/login'
@@ -41,7 +44,9 @@ function App() {
           />
 
           <Route path='/myorder'
-            element={<MyOrder />}
+            element={<PrivateRouter>
+              <MyOrder />
+            </PrivateRouter>}
           />
 
         </Routes>

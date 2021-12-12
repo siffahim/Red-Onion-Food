@@ -5,12 +5,14 @@ import firebaeAuthentication from "../Pages/Login/Firebase/firebase.init";
 firebaeAuthentication()
 const useFirebase = () => {
     const [user, setUser] = useState({});
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
+    const [isWaiting, setIsWaiting] = useState(true);
 
     const auth = getAuth()
 
     //register
     const registerUser = (email, password, name) => {
+        setIsWaiting(true)
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
                 const newUser = { email, displayName: name }
@@ -25,10 +27,14 @@ const useFirebase = () => {
 
             })
             .catch(err => setError(err.message))
+            .finally(() => {
+                setIsWaiting(false)
+            })
     }
 
     //login
     const loginUser = (email, password) => {
+        setIsWaiting(true)
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
 
@@ -38,27 +44,43 @@ const useFirebase = () => {
             .catch(err => {
                 setError(err.message)
             })
+            .finally(() => {
+                setIsWaiting(false)
+            })
     }
 
     //google
-    const signInGoogle = () => {
+    const signInGoogle = (location, navigate) => {
+        setIsWaiting(true)
         const googleProvider = new GoogleAuthProvider();
         signInWithPopup(auth, googleProvider)
             .then(result => {
                 setUser(result.user)
+
+                //redirect place
+                const uri = location?.state?.from || '/';
+                navigate(uri)
+
                 setError('')
             })
             .catch(err => setError(err.message))
+            .finally(() => {
+                setIsWaiting(false)
+            })
     }
 
     //facebook
     const signInFacebook = () => {
+        setIsWaiting(true)
         const facebookProvider = new FacebookAuthProvider();
         signInWithPopup(auth, facebookProvider)
             .then(result => {
                 setUser(result.user);
                 setError('')
-                    .catch(err => setError(err.message))
+            })
+            .catch(err => setError(err.message))
+            .finally(() => {
+                setIsWaiting(false)
             })
     }
 
@@ -81,6 +103,7 @@ const useFirebase = () => {
             else {
                 setUser({})
             }
+            setIsWaiting(false)
         })
     }, [])
 
@@ -89,6 +112,7 @@ const useFirebase = () => {
     return {
         user,
         error,
+        isWaiting,
         signInGoogle,
         signInFacebook,
         registerUser,

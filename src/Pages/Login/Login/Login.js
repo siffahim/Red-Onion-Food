@@ -1,13 +1,16 @@
 import { Grid, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
 import facebook from '../../../Image/facebook.png';
 import google from '../../../Image/google.png';
 import logo from '../../../Image/logo2.png';
 
 const Login = () => {
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const { loginUser, error, signInGoogle, signInFacebook } = useAuth()
     const [loginData, setLoginData] = useState({});
@@ -49,7 +52,7 @@ const Login = () => {
                     <Typography variant='body2'><Link to='/register'>Create new account</Link></Typography>
                 </form>
                 <div className='d-flex justify-content-center'>
-                    <div className='icon' onClick={signInGoogle}>
+                    <div className='icon' onClick={() => signInGoogle(location, navigate)}>
                         <img src={google} alt="" />
                     </div>
                     <div className='icon' onClick={signInFacebook}>
